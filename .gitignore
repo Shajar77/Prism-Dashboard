@@ -25,7 +25,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
-.vercel
 
 # API documentation artifacts (do not commit)
 swagger.json
