@@ -17,7 +17,7 @@ export interface TextFieldProps {
   required?: boolean
   disabled?: boolean
   error?: string
-  type?: "text" | "number" | "email" | "password"
+  type?: "text" | "number" | "email" | "password" | "date"
 }
 
 export function TextField({

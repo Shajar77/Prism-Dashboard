@@ -1,26 +1,47 @@
 import { create } from "zustand"
-import { type Asset } from "@/utils/api"
+import { type Project, type ProjectDetails } from "@/utils/api"
 
-interface FormData {
-  name: string
-  category: "Hardware" | "Software"
+export interface FormData {
+  title: string
+  category: "Solar" | "Wind"
   status: "Active" | "Inactive"
-  price: number
-  quantity: number
+  capacity: number
+  subProjects: number
+
+  // Form 1 details
+  startDate: string
+  subProject: string
+  city: string
+  size: string
+  code: string
+  clientBusiness: string
+  offTakeAgreement: string
+  cod: string
+  panel: string
+  panelQt: number
+  inverter: string
+  structure: string
+  netMetering: string
+  address: string
+  lat: number
+  lng: number
+  contactName: string
+  contactEmail: string
+  contactCell: string
 }
 
 interface UIState {
   // Modal State
   isModalOpen: boolean
-  editingAsset: Asset | null
+  editingProject: Project | null
   openAddModal: () => void
-  openEditModal: (asset: Asset) => void
+  openEditModal: (project: Project, details?: ProjectDetails) => void
   closeModal: () => void
 
   // Delete Modal State
   deleteModalOpen: boolean
-  assetToDelete: Asset | null
-  openDeleteModal: (asset: Asset) => void
+  projectToDelete: Project | null
+  openDeleteModal: (project: Project) => void
   closeDeleteModal: () => void
 
   // Form State
@@ -30,40 +51,80 @@ interface UIState {
 }
 
 const defaultFormData: FormData = {
-  name: "",
-  category: "Hardware",
+  title: "",
+  category: "Solar",
   status: "Active",
-  price: 500,
-  quantity: 1,
+  capacity: 100,
+  subProjects: 1,
+
+  startDate: "",
+  subProject: "",
+  city: "",
+  size: "",
+  code: "",
+  clientBusiness: "",
+  offTakeAgreement: "",
+  cod: "",
+  panel: "",
+  panelQt: 0,
+  inverter: "",
+  structure: "",
+  netMetering: "No",
+  address: "",
+  lat: 0,
+  lng: 0,
+  contactName: "",
+  contactEmail: "",
+  contactCell: "",
 }
 
 export const useUIStore = create<UIState>()((set) => ({
   // Modal State
   isModalOpen: false,
-  editingAsset: null,
+  editingProject: null,
   openAddModal: () => set({
     isModalOpen: true,
-    editingAsset: null,
+    editingProject: null,
     formData: defaultFormData,
   }),
-  openEditModal: (asset) => set({
+  openEditModal: (project, details) => set({
     isModalOpen: true,
-    editingAsset: asset,
+    editingProject: project,
     formData: {
-      name: asset.name,
-      category: asset.category,
-      status: asset.status,
-      price: asset.price || (asset.category === "Hardware" ? 2000 : 500),
-      quantity: asset.quantity || 1,
+      title: project.title,
+      category: project.category,
+      status: project.status,
+      capacity: project.capacity || 100,
+      subProjects: project.subProjects || 1,
+
+      startDate: details?.startDate || "",
+      subProject: details?.subProject || "",
+      city: details?.city || "",
+      size: details?.size || "",
+      code: details?.code || "",
+      clientBusiness: details?.clientBusiness || "",
+      offTakeAgreement: details?.offTakeAgreement || "",
+      cod: details?.cod || "",
+      panel: details?.panel || "",
+      panelQt: details?.panelQt || 0,
+      inverter: details?.inverter || "",
+      structure: details?.structure || "",
+      netMetering: details?.netMetering || "No",
+      address: details?.address || "",
+      lat: details?.lat || 0,
+      lng: details?.lng || 0,
+      contactName: details?.contacts?.[0]?.name || "",
+      contactEmail: details?.contacts?.[0]?.email || "",
+      contactCell: details?.contacts?.[0]?.cell?.[0] || "",
     },
   }),
-  closeModal: () => set({ isModalOpen: false, editingAsset: null }),
+  closeModal: () => set({ isModalOpen: false, editingProject: null }),
 
   // Delete Modal State
   deleteModalOpen: false,
-  assetToDelete: null,
-  openDeleteModal: (asset) => set({ deleteModalOpen: true, assetToDelete: asset }),
-  closeDeleteModal: () => set({ deleteModalOpen: false, assetToDelete: null }),
+  projectToDelete: null,
+  openDeleteModal: (project) => set({ deleteModalOpen: true, projectToDelete: project }),
+  closeDeleteModal: () => set({ deleteModalOpen: false, projectToDelete: null }),
 
   // Form State
   formData: defaultFormData,

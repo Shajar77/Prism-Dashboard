@@ -14,8 +14,13 @@ const plusJakartaSans = Plus_Jakarta_Sans({
 });
 
 export const metadata: Metadata = {
-  title: 'Flux',
-  description: 'Premium Asset Management Dashboard',
+  title: 'Prism Energy',
+  description: 'Premium Solar & Wind Energy Project Management Dashboard',
+  icons: {
+    icon: '/Untitled design (8).png',
+    shortcut: '/Untitled design (8).png',
+    apple: '/Untitled design (8).png',
+  },
 }
 
 export default function RootLayout({
@@ -25,7 +30,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${plusJakartaSans.variable} font-sans antialiased`}>
+      <head />
+      <body className={`${plusJakartaSans.variable} font-sans antialiased`} suppressHydrationWarning>
         <ThemeProvider
           attribute="class"
           defaultTheme="dark"
@@ -33,7 +39,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           {children}
-          {process.env.NODE_ENV === 'production' && <Analytics />}
+          {process.env.NODE_ENV === 'production' && process.env.VERCEL === '1' && <Analytics />}
           <Toaster />
         </ThemeProvider>
       </body>

@@ -26,3 +26,11 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 .vercel
+
+# API documentation artifacts (do not commit)
+swagger.json
+swagger.html
+swagger-ui-init.js
+
+# API response capture files
+localhost_*.json
